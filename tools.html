@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & Cybersecurity Tools - Cyber Shield AI</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader-container">
+        <div class="loader">
+            <div class="shield-loader">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="container">
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Cyber Shield AI</span>
+                </a>
+                <nav class="nav-menu">
+                    <ul>
+                        <li><a href="index.html" class="nav-link">Home</a></li>
+                        <li><a href="cases.html" class="nav-link">Cases</a></li>
+                        <li><a href="tools.html" class="nav-link active">Tools</a></li>
+                        <li><a href="about.html" class="nav-link">About</a></li>
+                        <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1 class="page-title">AI & Cybersecurity Tools</h1>
+                <p class="page-subtitle">Explore essential tools for digital protection</p>
+            </div>
+        </section>
+
+        <!-- Category Filter -->
+        <section class="category-filter">
+            <div class="container">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-category="all">All Tools</button>
+                    <button class="filter-btn" data-category="ai-security">AI Security</button>
+                    <button class="filter-btn" data-category="network-security">Network Security</button>
+                    <button class="filter-btn" data-category="data-protection">Data Protection</button>
+                    <button class="filter-btn" data-category="authentication">Authentication</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools Section -->
+        <section class="tools-section">
+            <div class="container">
+                <div class="tools-grid">
+                    <!-- AI Security Tools -->
+                    <a href="https://openai.com/blog/chatgpt" target="_blank" class="tool-card" data-category="ai-security" data-animate>
+                        <div class="tool-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3>ChatGPT</h3>
+                        <p>Advanced AI assistant for security analysis, threat detection, and cybersecurity guidance.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">AI</span>
+                            <span class="tool-tag">Analysis</span>
+                        </div>
+                    </a>
+
+                    <a href="https://bard.google.com" target="_blank" class="tool-card" data-category="ai-security" data-animate>
+                        <div class="tool-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>Google Bard</h3>
+                        <p>AI-powered tool for identifying vulnerabilities and generating security recommendations.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">AI</span>
+                            <span class="tool-tag">Google</span>
+                        </div>
+                    </a>
+
+                    <a href="https://www.microsoft.com/en-us/security/ai/copilot-for-security" target="_blank" class="tool-card" data-category="ai-security" data-animate>
+                        <div class="tool-icon">
+                            <i class="fas fa-shield-virus"></i>
+                        </div>
+                        <h3>Microsoft Security Copilot</h3>
+                        <p>AI assistant that helps security teams defend at machine speed and scale.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">AI</span>
+                            <span class="tool-tag">Microsoft</span>
+                        </div>
+                    </a>
+
+                    <a href="https://www.darktrace.com" target="_blank" class="tool-card" data-category="ai-security" data-animate>
+                        <div class="tool-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <h3>Darktrace</h3>
+                        <p>AI-powered cyber defense that detects and responds to threats in real-time.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">AI</span>
+                            <span class="tool-tag">Defense</span>
+                        </div>
+                    </a>
+
+                    <!-- Network Security Tools -->
+                    <a href="https://en.wikipedia.org/wiki/Firewall_(computing)" target="_blank" class="tool-card" data-category="network-security" data-animate>
+                        <div class="tool-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <h3>Firewalls</h3>
+                        <p>Network security systems that monitor and control incoming and outgoing network traffic.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">Network</span>
+                            <span class="tool-tag">Protection</span>
+                        </div>
+                    </a>
+
+                    <a href="https://en.wikipedia.org/wiki/Intrusion_detection_system" target="_blank" class="tool-card" data-category="network-security" data-animate>
+                        <div class="tool-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Intrusion Detection</h3>
+                        <p>Systems that monitor network traffic for suspicious activity and issue alerts.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">Network</span>
+                            <span class="tool-tag">Monitoring</span>
+                        </div>
+                    </a>
+
+                    <a href="https://www.wireshark.org" target="_blank" class="tool-card" data-category="network-security" data-animate>
+                        <div class="tool-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>Wireshark</h3>
+                        <p>Network protocol analyzer for network troubleshooting and analysis.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">Network</span>
+                            <span class="tool-tag">Analysis</span>
+                        </div>
+                    </a>
+
+                    <!-- Data Protection Tools -->
+                    <a href="https://en.wikipedia.org/wiki/Encryption" target="_blank" class="tool-card" data-category="data-protection" data-animate>
+                        <div class="tool-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h3>Encryption</h3>
+                        <p>Process of encoding information in such a way that only authorized parties can access it.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">Data</span>
+                            <span class="tool-tag">Security</span>
+                        </div>
+                    </a>
+
+                    <a href="https://www.veracrypt.com" target="_blank" class="tool-card" data-category="data-protection" data-animate>
+                        <div class="tool-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h3>VeraCrypt</h3>
+                        <p>Free open source disk encryption software for Windows, Mac OSX and Linux.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">Data</span>
+                            <span class="tool-tag">Encryption</span>
+                        </div>
+                    </a>
+
+                    <a href="https://en.wikipedia.org/wiki/Password_manager" target="_blank" class="tool-card" data-category="data-protection" data-animate>
+                        <div class="tool-icon">
+                            <i class="fas fa-user-lock"></i>
+                        </div>
+                        <h3>Password Managers</h3>
+                        <p>Tools that securely store and manage passwords for various accounts and services.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">Data</span>
+                            <span class="tool-tag">Passwords</span>
+                        </div>
+                    </a>
+
+                    <!-- Authentication Tools -->
+                    <a href="https://en.wikipedia.org/wiki/Two-factor_authentication" target="_blank" class="tool-card" data-category="authentication" data-animate>
+                        <div class="tool-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Two-Factor Authentication</h3>
+                        <p>Security process that requires users to provide two different authentication factors.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">Auth</span>
+                            <span class="tool-tag">Security</span>
+                        </div>
+                    </a>
+
+                    <a href="https://en.wikipedia.org/wiki/Biometrics" target="_blank" class="tool-card" data-category="authentication" data-animate>
+                        <div class="tool-icon">
+                            <i class="fas fa-fingerprint"></i>
+                        </div>
+                        <h3>Biometric Authentication</h3>
+                        <p>Security identification and authentication methods that use biological characteristics.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">Auth</span>
+                            <span class="tool-tag">Biometric</span>
+                        </div>
+                    </a>
+
+                    <a href="https://en.wikipedia.org/wiki/Single_sign-on" target="_blank" class="tool-card" data-category="authentication" data-animate>
+                        <div class="tool-icon">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </div>
+                        <h3>Single Sign-On (SSO)</h3>
+                        <p>Authentication scheme that allows a user to log in with a single ID to multiple systems.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">Auth</span>
+                            <span class="tool-tag">SSO</span>
+                        </div>
+                    </a>
+
+                    <!-- Additional Tools -->
+                    <a href="https://en.wikipedia.org/wiki/Antivirus_software" target="_blank" class="tool-card" data-category="data-protection" data-animate>
+                        <div class="tool-icon">
+                            <i class="fas fa-virus"></i>
+                        </div>
+                        <h3>Antivirus Software</h3>
+                        <p>Programs designed to detect and remove malicious software from computers.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">Protection</span>
+                            <span class="tool-tag">Software</span>
+                        </div>
+                    </a>
+
+                    <a href="https://en.wikipedia.org/wiki/Virtual_private_network" target="_blank" class="tool-card" data-category="network-security" data-animate>
+                        <div class="tool-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <h3>VPN</h3>
+                        <p>Virtual Private Networks that create secure connections over less secure networks.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">Network</span>
+                            <span class="tool-tag">Privacy</span>
+                        </div>
+                    </a>
+
+                    <a href="https://www.cloudflare.com" target="_blank" class="tool-card" data-category="network-security" data-animate>
+                        <div class="tool-icon">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        <h3>Cloudflare</h3>
+                        <p>Cloud-based security and performance services to protect and accelerate websites.</p>
+                        <div class="tool-tags">
+                            <span class="tool-tag">Cloud</span>
+                            <span class="tool-tag">Security</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Cyber Shield AI</span>
+                </div>
+                <p>&copy; 2023 Cyber Shield AI. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

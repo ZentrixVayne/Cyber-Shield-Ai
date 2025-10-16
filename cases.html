@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Threat Cases - Cyber Shield AI</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader-container">
+        <div class="loader">
+            <div class="shield-loader">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="container">
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Cyber Shield AI</span>
+                </a>
+                <nav class="nav-menu">
+                    <ul>
+                        <li><a href="index.html" class="nav-link">Home</a></li>
+                        <li><a href="cases.html" class="nav-link active">Cases</a></li>
+                        <li><a href="tools.html" class="nav-link">Tools</a></li>
+                        <li><a href="about.html" class="nav-link">About</a></li>
+                        <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1 class="page-title">Cyber Threat Cases</h1>
+                <p class="page-subtitle">Exploring significant cybersecurity incidents and how they were resolved</p>
+            </div>
+        </section>
+
+        <!-- Cases Section -->
+        <section class="cases-section">
+            <div class="container">
+                <div class="cases-grid">
+                    <div class="case-card" data-tilt data-animate>
+                        <div class="case-image">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="case-content">
+                            <h3>WannaCry Ransomware Attack</h3>
+                            <p class="case-date">May 2017</p>
+                            <p>A global ransomware attack that affected over 200,000 computers across 150 countries. The attack exploited a vulnerability in Windows systems.</p>
+                            <div class="case-resolution">
+                                <h4>Resolution:</h4>
+                                <p>Security researchers discovered a "kill switch" that halted the spread, and Microsoft released emergency patches for unsupported systems.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card" data-tilt data-animate>
+                        <div class="case-image">
+                            <i class="fas fa-user-secret"></i>
+                        </div>
+                        <div class="case-content">
+                            <h3>SolarWinds Supply Chain Attack</h3>
+                            <p class="case-date">December 2020</p>
+                            <p>A sophisticated supply chain attack that compromised the software build process of SolarWinds, affecting numerous government agencies and corporations.</p>
+                            <div class="case-resolution">
+                                <h4>Resolution:</h4>
+                                <p>Extensive investigation led to identifying the breach vectors, and organizations implemented enhanced supply chain security measures.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card" data-tilt data-animate>
+                        <div class="case-image">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="case-content">
+                            <h3>Equifax Data Breach</h3>
+                            <p class="case-date">September 2017</p>
+                            <p>One of the largest data breaches in history, exposing sensitive information of approximately 147 million people.</p>
+                            <div class="case-resolution">
+                                <h4>Resolution:</h4>
+                                <p>Equifax implemented comprehensive security reforms, established a $700 million compensation fund, and enhanced their monitoring systems.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-card" data-tilt data-animate>
+                        <div class="case-image">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <div class="case-content">
+                            <h3>WannaCry Healthcare Impact</h3>
+                            <p class="case-date">May 2017</p>
+                            <p>The NHS in the UK was severely affected, with hospitals canceling appointments and diverting emergency patients due to system failures.</p>
+                            <div class="case-resolution">
+                                <h4>Resolution:</h4>
+                                <p>Emergency protocols were activated, systems were restored from backups, and the NHS invested £150 million in cybersecurity improvements.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Cyber Shield AI</span>
+                </div>
+                <p>&copy; 2023 Cyber Shield AI. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

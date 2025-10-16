@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Cyber Shield AI</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader-container">
+        <div class="loader">
+            <div class="shield-loader">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="container">
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Cyber Shield AI</span>
+                </a>
+                <nav class="nav-menu">
+                    <ul>
+                        <li><a href="index.html" class="nav-link">Home</a></li>
+                        <li><a href="cases.html" class="nav-link">Cases</a></li>
+                        <li><a href="tools.html" class="nav-link">Tools</a></li>
+                        <li><a href="about.html" class="nav-link">About</a></li>
+                        <li><a href="contact.html" class="nav-link active">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1 class="page-title">Contact Us</h1>
+                <p class="page-subtitle">Get in touch with our team</p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-content">
+                    <div class="contact-info" data-animate>
+                        <h2>Get In Touch</h2>
+                        <p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+                        
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <h3>Email</h3>
+                                    <p>info@cybershieldai.com</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <h3>Phone</h3>
+                                    <p>+1 (123) 456-7890</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <h3>Address</h3>
+                                    <p>123 Security Street, Tech City, TC 12345</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-container" data-animate>
+                        <form class="contact-form" id="contactForm">
+                            <div class="form-group">
+                                <label for="name">Name *</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subject *</label>
+                                <input type="text" id="subject" name="subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message *</label>
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="submitBtn">
+                                <span id="btnText">Send Message</span>
+                                <i class="fas fa-paper-plane" id="btnIcon"></i>
+                            </button>
+                        </form>
+                        
+                        <!-- Form Message Container -->
+                        <div class="form-message-container">
+                            <div class="form-message" id="formMessage"></div>
+                        </div>
+                        
+                        <!-- Sending Animation (Hidden by default) -->
+                        <div class="sending-animation" id="sendingAnimation">
+                            <div class="sending-envelope">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="sending-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <p>Sending your message...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Cyber Shield AI</span>
+                </div>
+                <p>&copy; 2023 Cyber Shield AI. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- EmailJS Script -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <!-- Main Script File -->
+    <script src="script.js"></script>
+</body>
+</html>
