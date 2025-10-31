@@ -364,9 +364,58 @@ const chatbotInput = document.querySelector('.chatbot-input input');
 const sendBtn = document.querySelector('.send-btn');
 const chatbotMessages = document.querySelector('.chatbot-messages');
 
+// Enhanced chatbot scroll functionality
+function setupChatbotScroll() {
+    if (chatbotMessages) {
+        // Ensure proper scroll styling
+        chatbotMessages.style.overflowY = 'auto';
+        chatbotMessages.style.maxHeight = '400px';
+        chatbotMessages.style.scrollBehavior = 'smooth';
+        
+        // Add custom scrollbar styling
+        const style = document.createElement('style');
+        style.textContent = `
+            .chatbot-messages::-webkit-scrollbar {
+                width: 6px;
+            }
+            .chatbot-messages::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 3px;
+            }
+            .chatbot-messages::-webkit-scrollbar-thumb {
+                background: rgba(74, 108, 247, 0.5);
+                border-radius: 3px;
+            }
+            .chatbot-messages::-webkit-scrollbar-thumb:hover {
+                background: rgba(74, 108, 247, 0.7);
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Auto-scroll to bottom on new messages
+        const observer = new MutationObserver(() => {
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        });
+        
+        observer.observe(chatbotMessages, {
+            childList: true,
+            subtree: true
+        });
+    }
+}
+
+// Initialize scroll setup
+setupChatbotScroll();
+
 if (chatbotToggle && chatbot) {
     chatbotToggle.addEventListener('click', () => {
         chatbot.classList.toggle('active');
+        // Scroll to bottom when opening
+        setTimeout(() => {
+            if (chatbotMessages) {
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            }
+        }, 100);
     });
 }
 
@@ -376,21 +425,124 @@ if (chatbotClose && chatbot) {
     });
 }
 
-// Simple chatbot responses
-const botResponses = [
-    "I'm here to help with cybersecurity questions.",
-    "Our AI-powered tools can detect threats before they become attacks.",
-    "Encryption is essential for protecting sensitive data.",
-    "Regular security audits help identify vulnerabilities.",
-    "Employee training is a critical component of cybersecurity.",
-    "Multi-factor authentication adds an extra layer of security.",
-    "Keeping software updated is one of the best security practices.",
-    "Phishing attacks are becoming more sophisticated.",
-    "A strong password policy is essential for security.",
-    "Our team is available 24/7 for security assistance."
-];
+// Function to show typing indicator
+function showTypingIndicator() {
+    if (!chatbotMessages) return;
+    
+    const typingIndicator = document.createElement('div');
+    typingIndicator.classList.add('message', 'bot-message', 'typing-indicator');
+    typingIndicator.innerHTML = '<span></span><span></span><span></span>';
+    chatbotMessages.appendChild(typingIndicator);
+    
+    // Scroll to bottom
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    
+    return typingIndicator;
+}
 
-function sendMessage() {
+// Function to remove typing indicator
+function removeTypingIndicator(indicator) {
+    if (indicator && indicator.parentNode) {
+        indicator.parentNode.removeChild(indicator);
+    }
+}
+
+// Function to call OpenRouter API
+async function getAIResponse(message) {
+    try {
+        // IMPORTANT: Replace YOUR_API_KEY_HERE with your actual OpenRouter API key
+        const API_KEY = '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';
+        
+        // If you have a new API key, replace it above
+        // Make sure it starts with 'sk-or-v1-'
+        
+        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${API_KEY}`,
+                'HTTP-Referer': window.location.origin,
+                'X-Title': 'CyberShield AI Assistant'
+            },
+            body: JSON.stringify({
+                // Using a reliable free model
+                model: 'meta-llama/llama-3.2-3b-instruct:free',
+                max_tokens: 60, // Reduced for shorter messages
+                temperature: 0.3, // Lower for more concise responses
+                messages: [
+                    {
+                        role: 'system',
+                        content: 'You are a helpful cybersecurity assistant created by CyberShield AI. Your owners are CyberShield AI, Arshman Anil, and Muhammad Izhan. Provide very short, concise answers. Maximum 30 words. Be direct and helpful.'
+                    },
+                    {
+                        role: 'user',
+                        content: message
+                    }
+                ]
+            })
+        });
+        
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            console.error('API Error Details:', errorData);
+            
+            if (response.status === 401) {
+                return '⚠️ Authentication error: Check your API key.';
+            } else if (response.status === 429) {
+                return '⚠️ Rate limit exceeded. Try again later.';
+            } else if (response.status === 403) {
+                return '⚠️ Access forbidden. Model unavailable.';
+            } else {
+                return `⚠️ API Error (${response.status}). Try again.`;
+            }
+        }
+        
+        const data = await response.json();
+        
+        if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+            console.error('Invalid API response:', data);
+            return '⚠️ Invalid response. Try again.';
+        }
+        
+        return data.choices[0].message.content;
+    } catch (error) {
+        console.error('Error calling AI API:', error);
+        
+        if (error.name === 'TypeError' && error.message.includes('fetch')) {
+            return '⚠️ Network error. Check connection.';
+        }
+        
+        return '⚠️ Error occurred. Try again later.';
+    }
+}
+
+// Function to display bot message with typing animation
+function displayBotMessage(text) {
+    if (!chatbotMessages) return;
+    
+    const botMessage = document.createElement('div');
+    botMessage.classList.add('message', 'bot-message');
+    chatbotMessages.appendChild(botMessage);
+    
+    // Typing animation
+    let index = 0;
+    const typingInterval = setInterval(() => {
+        if (index < text.length) {
+            botMessage.textContent = text.substring(0, index + 1);
+            index++;
+            // Scroll to bottom as text appears
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        } else {
+            clearInterval(typingInterval);
+        }
+    }, 15); // Slightly faster for short messages
+    
+    // Scroll to bottom
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+}
+
+// Function to send message and get AI response
+async function sendMessage() {
     if (!chatbotInput || !chatbotMessages) return;
     
     const message = chatbotInput.value.trim();
@@ -405,16 +557,17 @@ function sendMessage() {
     // Clear input
     chatbotInput.value = '';
     
-    // Simulate bot response
-    setTimeout(() => {
-        const botMessage = document.createElement('div');
-        botMessage.classList.add('message', 'bot-message');
-        botMessage.textContent = botResponses[Math.floor(Math.random() * botResponses.length)];
-        chatbotMessages.appendChild(botMessage);
-        
-        // Scroll to bottom
-        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-    }, 1000);
+    // Show typing indicator
+    const typingIndicator = showTypingIndicator();
+    
+    // Get AI response
+    const aiResponse = await getAIResponse(message);
+    
+    // Remove typing indicator
+    removeTypingIndicator(typingIndicator);
+    
+    // Display AI response with typing animation
+    displayBotMessage(aiResponse);
     
     // Scroll to bottom
     chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
