@@ -451,7 +451,7 @@ function removeTypingIndicator(indicator) {
 async function getAIResponse(message) {
     try {
         // IMPORTANT: Replace YOUR_API_KEY_HERE with your actual OpenRouter API key
-        const API_KEY = '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';
+        const API_KEY = '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';
         
         // If you have a new API key, replace it above
         // Make sure it starts with 'sk-or-v1-'
