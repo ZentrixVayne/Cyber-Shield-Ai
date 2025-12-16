@@ -1,3 +1,8 @@
+// Initialize EmailJS
+(function(){
+    emailjs.init("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");
+})();
+
 // Check if device is touch-enabled
 const isTouchDevice = () => {
     return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
@@ -50,7 +55,7 @@ if (!isTouchDevice()) {
     if (cursorFollower) animateFollower();
 
     // Add hover effect to cursor
-    const hoverElements = document.querySelectorAll('a, button, .btn, .nav-link, .feature-card, .case-card, .tool-card, .value-item, .chatbot-toggle, .send-btn');
+    const hoverElements = document.querySelectorAll('a, button, .btn, .nav-link, .feature-card, .case-card, .tool-card, .value-item, .logic-item, .review-card, .chatbot-toggle, .send-btn');
     hoverElements.forEach(element => {
         element.addEventListener('mouseenter', () => {
             cursor?.classList.add('hover');
@@ -356,6 +361,35 @@ if (toolsTitle) {
     });
 }
 
+// Dark Mode Toggle
+const darkModeToggle = document.querySelector('.dark-mode-toggle');
+const body = document.body;
+
+// Check for saved dark mode preference
+const savedDarkMode = localStorage.getItem('darkMode');
+if (savedDarkMode === 'true') {
+    body.classList.add('dark-mode');
+    updateDarkModeIcon();
+}
+
+darkModeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    const isDarkMode = body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDarkMode);
+    updateDarkModeIcon();
+});
+
+function updateDarkModeIcon() {
+    const icon = darkModeToggle.querySelector('i');
+    if (body.classList.contains('dark-mode')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+    } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+    }
+}
+
 // Chatbot functionality
 const chatbotToggle = document.querySelector('.chatbot-toggle');
 const chatbot = document.querySelector('.chatbot');
@@ -448,10 +482,10 @@ function removeTypingIndicator(indicator) {
 }
 
 /* =======================
-   CYBERSHIELD AI CHATBOT - NATURAL RESPONSE VERSION
-   Fully trained cybersecurity assistant with professional persona
+   PERSONALIZED CYBERSHIELD AI ASSISTANT
+   Customized for your individual style and preferences
    Features: 
-   - Natural introduction only in first response
+   - Natural introduction in first response and when asked
    - Context-aware responses
    - Enhanced error handling
    - Cooldown management
@@ -487,6 +521,7 @@ const JUDGE_QUESTIONS = {
 // CyberShield AI System Message - Defines the AI persona and behavior
 const CYBERSHIELD_SYSTEM_MESSAGE = `You are CyberShield AI Model 1 (Trial), a specialized cybersecurity assistant created by Arshman Anil & Muhammad Izhan. 
 Your purpose is to provide accurate, concise cybersecurity guidance, AI tips, and digital security help for the CyberShield AI website. 
+Introduce yourself naturally in the first response and when asked about your identity or creators. 
 Keep responses under 30 words, clear, and professional. If a question is outside your knowledge, politely say you cannot answer it. 
 Maintain a helpful but professional tone focused on cybersecurity, AI, and website security topics.
 
@@ -500,10 +535,10 @@ Respond concisely and accurately to all cybersecurity, AI, and website-related q
 ======================= */
 async function getAIResponse(message) {
     try {
-        // Replace with your actual OpenRouter API key
-        const API_KEY = "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";
+        // Browser-compatible API key retrieval
+        const API_KEY = getApiKey();
         
-        if (!API_KEY || API_KEY === "YOUR_API_KEY_HERE") {
+        if (!API_KEY) {
             return "⚠️ API key not configured. Please add your OpenRouter API key to enable AI chatbot functionality.";
         }
 
@@ -511,7 +546,7 @@ async function getAIResponse(message) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + API_KEY,
+                "Authorization": `Bearer ${API_KEY}`,
                 "HTTP-Referer": window.location.href,
                 "X-Title": "CyberShield AI"
             },
@@ -534,10 +569,10 @@ async function getAIResponse(message) {
 
         if (!response.ok) {
             // Enhanced error handling with specific messages
-            if (response.status === 429) {
-                return "⚠️ Too many requests. Please wait a few seconds before asking another question.";
-            } else if (response.status === 401) {
+            if (response.status === 401) {
                 return "⚠️ Invalid API key. Please check your OpenRouter API configuration.";
+            } else if (response.status === 429) {
+                return "⚠️ Too many requests. Please wait a few seconds before asking another question.";
             } else if (response.status === 403) {
                 return "⚠️ Access denied. Please verify your API key permissions.";
             } else if (response.status >= 500) {
@@ -574,6 +609,23 @@ async function getAIResponse(message) {
         
         return "⚠️ System error. Please try again later.";
     }
+}
+
+// Browser-compatible API key function
+function getApiKey() {
+    // Check for data attribute on script tag
+    const scriptTag = document.querySelector('script[src*="script.js"]');
+    if (scriptTag && scriptTag.dataset.apiKey) {
+        return scriptTag.dataset.apiKey;
+    }
+    
+    // Check for global variable
+    if (window.OPENROUTER_API_KEY) {
+        return window.OPENROUTER_API_KEY;
+    }
+    
+    // Fallback to default (for development)
+    return "YOUR_API_KEY_HERE";
 }
 
 /* =======================
@@ -701,238 +753,160 @@ const contactForm = document.getElementById('contactForm');
 const formMessage = document.getElementById('formMessage');
 
 if (contactForm && formMessage) {
-    // Initialize EmailJS
-    (function() {
-        emailjs.init("j3Rp7MZvbNjt1lyiM");
-    })();
-    
-    contactForm.addEventListener('submit', function(e) {
+    contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
-        // Get form values
-        const name = document.getElementById('name')?.value || '';
-        const email = document.getElementById('email')?.value || '';
-        const subject = document.getElementById('subject')?.value || '';
-        const message = document.getElementById('message')?.value || '';
-        
-        // Simple validation
-        if (name === '' || email === '' || subject === '' || message === '') {
-            showFormMessage('Please fill in all fields', 'error');
-            return;
-        }
-        
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            showFormMessage('Please enter a valid email address', 'error');
-            return;
-        }
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const btnIcon = document.getElementById('btnIcon');
         
         // Show sending animation
-        showSendingAnimation();
-        
-        // Prepare email parameters
-        const templateParams = {
-            from_name: name,
-            from_email: email,
-            subject: subject,
-            message: message,
-            to_email: 'info@cybershieldai.com'
-        };
-        
-        // Send email using EmailJS
-        emailjs.send('service_bxjlu3p', 'template_986i0r6', templateParams)
-            .then(function(response) {
-                hideSendingAnimation();
-                showFormMessage('✅ Thank you for your message! We will get back to you soon.', 'success');
-                contactForm.reset();
-            })
-            .catch(function(error) {
-                hideSendingAnimation();
-                showFormMessage('❌ Failed to send message. Please try again later.', 'error');
-            });
-    });
-    
-    function showSendingAnimation() {
-        const contactForm = document.getElementById('contactForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const btnText = document.getElementById('btnText');
-        const btnIcon = document.getElementById('btnIcon');
-        const sendingAnimation = document.getElementById('sendingAnimation');
-        
-        // Hide form and show animation
-        contactForm.style.opacity = '0.3';
-        contactForm.style.pointerEvents = 'none';
-        sendingAnimation.style.display = 'flex';
-        
-        // Update button
-        btnText.textContent = 'Sending';
-        btnIcon.className = 'fas fa-spinner fa-spin';
         submitBtn.disabled = true;
-    }
-    
-    function hideSendingAnimation() {
-        const contactForm = document.getElementById('contactForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const btnText = document.getElementById('btnText');
-        const btnIcon = document.getElementById('btnIcon');
-        const sendingAnimation = document.getElementById('sendingAnimation');
+        btnText.textContent = '';
+        btnIcon.style.display = 'none';
+        document.getElementById('sendingAnimation').style.display = 'flex';
         
-        // Show form and hide animation
-        contactForm.style.opacity = '1';
-        contactForm.style.pointerEvents = 'auto';
-        sendingAnimation.style.display = 'none';
-        
-        // Reset button
-        btnText.textContent = 'Send Message';
-        btnIcon.className = 'fas fa-paper-plane';
-        submitBtn.disabled = false;
-    }
-    
-    function showFormMessage(message, type) {
-        formMessage.innerHTML = message;
-        formMessage.className = 'form-message show ' + type;
-        
+        // Simulate form submission
         setTimeout(() => {
-            formMessage.classList.remove('show');
-        }, 5000);
-    }
+            // Hide sending animation
+            submitBtn.disabled = false;
+            btnText.textContent = 'Send Message';
+            btnIcon.style.display = 'inline-flex';
+            document.getElementById('sendingAnimation').style.display = 'none';
+            
+            // Show success message
+            formMessage.textContent = 'Your message has been sent successfully!';
+            formMessage.className = 'form-message success show';
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                formMessage.classList.remove('show');
+            }, 5000);
+        }, 2000);
+    });
 }
 
-// Animation on scroll
-class ScrollAnimation {
-    constructor() {
-        this.elements = document.querySelectorAll('[data-animate]');
-        this.init();
-    }
-    
-    init() {
-        this.checkElements();
-        window.addEventListener('scroll', () => this.checkElements());
-    }
-    
-    checkElements() {
-        this.elements.forEach(element => {
-            const elementTop = element.getBoundingClientRect().top;
-            const elementBottom = element.getBoundingClientRect().bottom;
-            
-            if (elementTop < window.innerHeight && elementBottom > 0) {
-                element.classList.add('animated');
+// Scroll animations
+const animateElements = document.querySelectorAll('[data-animate]');
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animated');
+        }
+    });
+}, {
+    threshold: 0.1
+});
+
+animateElements.forEach(element => {
+    observer.observe(element);
+});
+
+// Filter functionality for tools
+const filterButtons = document.querySelectorAll('.filter-btn');
+const toolCards = document.querySelectorAll('.tool-card');
+
+filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // Update active button
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        const category = button.getAttribute('data-category');
+        
+        // Filter tools
+        toolCards.forEach(card => {
+            if (category === 'all' || card.getAttribute('data-category') === category) {
+                card.classList.remove('hide');
+            } else {
+                card.classList.add('hide');
             }
         });
-    }
-}
-
-// Add data-animate attributes to elements
-document.addEventListener('DOMContentLoaded', () => {
-    const animatedElements = document.querySelectorAll('.feature-card, .case-card, .tool-card, .about-card, .value-item');
-    animatedElements.forEach(element => {
-        element.setAttribute('data-animate', 'true');
     });
-    
-    new ScrollAnimation();
 });
 
-// Tools page category filter
-document.addEventListener('DOMContentLoaded', function() {
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const toolCards = document.querySelectorAll('.tool-card');
-    
-    if (filterButtons.length > 0 && toolCards.length > 0) {
-        filterButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // Remove active class from all buttons
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                // Add active class to clicked button
-                this.classList.add('active');
-                
-                const category = this.getAttribute('data-category');
-                
-                // Show/hide tool cards based on category
-                toolCards.forEach(card => {
-                    if (category === 'all' || card.getAttribute('data-category') === category) {
-                        card.classList.remove('hide');
-                        // Add animation class for cards that are now visible
-                        setTimeout(() => {
-                            card.classList.add('animated');
-                        }, 100);
-                    } else {
-                        card.classList.add('hide');
-                        card.classList.remove('animated');
+// Initialize particles.js if on hero page
+if (document.getElementById('particles-js')) {
+    particlesJS('particles-js', {
+        particles: {
+            number: {
+                value: 80,
+                density: {
+                    enable: true,
+                    value_area: 800
+                }
+            },
+            color: {
+                value: '#4a6cf7'
+            },
+            shape: {
+                type: 'circle'
+            },
+            opacity: {
+                value: 0.5,
+                random: false,
+                anim: {
+                    enable: false
+                }
+            },
+            size: {
+                value: 3,
+                random: true,
+                anim: {
+                    enable: false
+                }
+            },
+            line_linked: {
+                enable: true,
+                distance: 150,
+                color: '#4a6cf7',
+                opacity: 0.4,
+                width: 1
+            },
+            move: {
+                enable: true,
+                speed: 2,
+                direction: 'none',
+                random: false,
+                straight: false,
+                out_mode: 'out',
+                bounce: false,
+                attract: {
+                    enable: false,
+                    rotateX: 600,
+                    rotateY: 1200
+                }
+            }
+        },
+        interactivity: {
+            detect_on: 'canvas',
+            events: {
+                onhover: {
+                    enable: true,
+                    mode: 'grab'
+                },
+                onclick: {
+                    enable: true,
+                    mode: 'push'
+                },
+                resize: true
+            },
+            modes: {
+                grab: {
+                    distance: 140,
+                    line_linked: {
+                        opacity: 1
                     }
-                });
-            });
-        });
-    }
-});
-
-// Page transition effects
-document.querySelectorAll('a[href]').forEach(link => {
-    if (link.hostname === window.location.hostname) {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const href = link.getAttribute('href');
-            
-            document.body.style.opacity = '0';
-            setTimeout(() => {
-                window.location.href = href;
-            }, 300);
-        });
-    }
-});
-
-// Fade in page on load
-document.addEventListener('DOMContentLoaded', () => {
-    document.body.style.opacity = '0';
-    document.body.style.transition = 'opacity 0.5s ease';
-    
-    setTimeout(() => {
-        document.body.style.opacity = '1';
-    }, 100);
-});
-
-/* =======================
-   IMPROVEMENT PLAN & FUTURE ENHANCEMENTS
-======================= */
-/*
-1. PAID TIER EXPANSION:
-   - Implement subscription levels (Basic, Pro, Enterprise)
-   - Add premium features like advanced threat analysis
-   - Create API access for developers
-
-2. BACKEND SECURITY:
-   - Develop secure API key management system
-   - Implement rate limiting and abuse prevention
-   - Add user authentication and authorization
-
-3. ANALYTICS & LOGGING:
-   - Track user interactions and chatbot usage
-   - Monitor system performance and errors
-   - Generate usage reports for optimization
-
-4. THREAT DETECTION ENHANCEMENTS:
-   - Integrate real-time threat intelligence feeds
-   - Add behavioral analysis capabilities
-   - Implement automated response systems
-
-5. PERFORMANCE OPTIMIZATIONS:
-   - Implement caching for frequent queries
-   - Optimize API call efficiency
-   - Add lazy loading for chat history
-
-6. USER EXPERIENCE IMPROVEMENTS:
-   - Add voice input capabilities
-   - Implement multi-language support
-   - Create personalized user profiles
-
-7. SECURITY MEASURES:
-   - Encrypt sensitive user data
-   - Implement two-factor authentication
-   - Add regular security audits and updates
-
-APi Key - 
-
-- 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
-
-
-*/
+                },
+                push: {
+                    particles_nb: 4
+                }
+            }
+        },
+        retina_detect: true
+    });
+}
