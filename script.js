@@ -3,7 +3,7 @@
     emailjs.init("j3Rp7MZvbNjt1lyiM");
 })();
 
-// Check if device is touch-enabled - declared only once
+// Check if device is touch-enabled - DECLARED ONLY ONCE
 const isTouchDevice = () => {
     return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
 };
