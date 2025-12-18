@@ -3,7 +3,7 @@
     emailjs.init("j3Rp7MZvbNjt1lyiM");
 })();
 
-// Check if device is touch-enabled
+// Check if device is touch-enabled - declared only once
 const isTouchDevice = () => {
     return 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
 };
@@ -68,7 +68,7 @@ if (!isTouchDevice()) {
     });
 }
 
-// Smooth scrolling - only on non-touch devices
+// Smooth scrolling - only on non-touch devices - FIXED to prevent auto-scroll
 if (!isTouchDevice()) {
     class SmoothScroll {
         constructor() {
@@ -76,6 +76,8 @@ if (!isTouchDevice()) {
             this.targetY = 0;
             this.currentY = window.pageYOffset;
             this.speed = 0.08;
+            this.lastScrollTime = 0;
+            this.scrollDelay = 50; // Add delay to prevent rapid scrolling
             
             this.init();
         }
@@ -95,8 +97,12 @@ if (!isTouchDevice()) {
         
         handleWheel(e) {
             e.preventDefault();
-            this.targetY += e.deltaY;
-            this.isScrolling = true;
+            const now = Date.now();
+            if (now - this.lastScrollTime > this.scrollDelay) {
+                this.targetY += e.deltaY;
+                this.isScrolling = true;
+                this.lastScrollTime = now;
+            }
         }
         
         handleKeydown(e) {
@@ -164,7 +170,7 @@ if (hamburger && navMenu) {
     });
 }
 
-// Simple particle system for home page
+// Simple particle system for home page - USING CUSTOM IMPLEMENTATION
 class ParticleSystem {
     constructor(canvas) {
         this.canvas = canvas;
@@ -856,85 +862,3 @@ filterButtons.forEach(button => {
         });
     });
 });
-
-// Initialize particles.js if on hero page
-if (document.getElementById('particles-js')) {
-    particlesJS('particles-js', {
-        particles: {
-            number: {
-                value: 80,
-                density: {
-                    enable: true,
-                    value_area: 800
-                }
-            },
-            color: {
-                value: '#4a6cf7'
-            },
-            shape: {
-                type: 'circle'
-            },
-            opacity: {
-                value: 0.5,
-                random: false,
-                anim: {
-                    enable: false
-                }
-            },
-            size: {
-                value: 3,
-                random: true,
-                anim: {
-                    enable: false
-                }
-            },
-            line_linked: {
-                enable: true,
-                distance: 150,
-                color: '#4a6cf7',
-                opacity: 0.4,
-                width: 1
-            },
-            move: {
-                enable: true,
-                speed: 2,
-                direction: 'none',
-                random: false,
-                straight: false,
-                out_mode: 'out',
-                bounce: false,
-                attract: {
-                    enable: false,
-                    rotateX: 600,
-                    rotateY: 1200
-                }
-            }
-        },
-        interactivity: {
-            detect_on: 'canvas',
-            events: {
-                onhover: {
-                    enable: true,
-                    mode: 'grab'
-                },
-                onclick: {
-                    enable: true,
-                    mode: 'push'
-                },
-                resize: true
-            },
-            modes: {
-                grab: {
-                    distance: 140,
-                    line_linked: {
-                        opacity: 1
-                    }
-                },
-                push: {
-                    particles_nb: 4
-                }
-            }
-        },
-        retina_detect: true
-    });
-}
