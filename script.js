@@ -1,6 +1,6 @@
-// Initialize EmailJS
+// Initialize EmailJS with your credentials
 (function(){
-    emailjs.init("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");
+    emailjs.init("j3Rp7MZvbNjt1lyiM");
 })();
 
 // Check if device is touch-enabled
@@ -748,12 +748,12 @@ if (chatbotInput) {
     });
 }
 
-// Contact form submission with EmailJS
+// Contact form submission with EmailJS - FIXED VERSION
 const contactForm = document.getElementById('contactForm');
 const formMessage = document.getElementById('formMessage');
 
 if (contactForm && formMessage) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const submitBtn = document.getElementById('submitBtn');
@@ -766,15 +766,24 @@ if (contactForm && formMessage) {
         btnIcon.style.display = 'none';
         document.getElementById('sendingAnimation').style.display = 'flex';
         
-        // Simulate form submission
-        setTimeout(() => {
-            // Hide sending animation
+        try {
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
+            
+            // Send email using EmailJS
+            await emailjs.send('service_bxjlu3p', 'template_986i0r6', formData);
+            
+            // Hide sending animation and show success message
             submitBtn.disabled = false;
             btnText.textContent = 'Send Message';
             btnIcon.style.display = 'inline-flex';
             document.getElementById('sendingAnimation').style.display = 'none';
             
-            // Show success message
             formMessage.textContent = 'Your message has been sent successfully!';
             formMessage.className = 'form-message success show';
             
@@ -785,7 +794,26 @@ if (contactForm && formMessage) {
             setTimeout(() => {
                 formMessage.classList.remove('show');
             }, 5000);
-        }, 2000);
+            
+        } catch (error) {
+            // Handle error
+            console.error('EmailJS Error:', error);
+            
+            // Hide sending animation
+            submitBtn.disabled = false;
+            btnText.textContent = 'Send Message';
+            btnIcon.style.display = 'inline-flex';
+            document.getElementById('sendingAnimation').style.display = 'none';
+            
+            // Show error message
+            formMessage.textContent = 'Failed to send message. Please try again later.';
+            formMessage.className = 'form-message error show';
+            
+            // Hide error message after 5 seconds
+            setTimeout(() => {
+                formMessage.classList.remove('show');
+            }, 5000);
+        }
     });
 }
 
